@@ -1,0 +1,26 @@
+services:
+
+  juice-shop:
+    image: bkimminich/juice-shop
+    container_name: juice-shop
+    networks:
+      - labnet
+
+  pentest:
+    build: .
+    container_name: pentest
+    stdin_open: true
+    tty: true
+    networks:
+      - labnet
+    cap_add:
+      - NET_ADMIN
+      - NET_RAW
+    ports:
+      - "5901:5901"   # VNC port
+    volumes:
+      - ./workspace:/home/pentester/workspace
+
+networks:
+  labnet:
+    driver: bridge
